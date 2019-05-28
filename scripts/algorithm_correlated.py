@@ -59,7 +59,6 @@ def Meddit(arg_tuple):
     start_time = time.time()
     summary = [0]
     summary_pulls = [0]
-    opt_in = [True] # is arm 7374 in pool
     estimate = np.zeros(n)
     old_tmean  = 0
     num_rounds = int(np.ceil(np.log2(n)))
@@ -96,7 +95,6 @@ def Meddit(arg_tuple):
         lst = estimate[S]
         summary.append(S[np.argmin(lst)])
         summary_pulls.append(T.mean())
-        opt_in.append(opt_arm in S)
 
         med = np.median(lst)
         locs = np.where(lst<=med)[0]
@@ -106,7 +104,7 @@ def Meddit(arg_tuple):
             break
 
 
-        print("Round {}, {} arms: {} pulls, opt was {:.3F} cutoff was {:.3F}".format(round_iter,len(S),num_pulls_per_arm, estimate[opt_arm], med))
+        print("Round {}, {} arms: {} pulls, cutoff was {:.3F}".format(round_iter,len(S),num_pulls_per_arm, med))
         S = S[locs]
 
         if len(S)==1:
@@ -152,14 +150,6 @@ elif dataset == 'netflix100k':
 elif dataset == 'mnist':
     data_loader = data_loader.load_mnist
     dist_func   = helper.l2_dist
-elif dataset == 'birch1':
-    with open('/data/medoid_bandit/Med-dit/datasets/birch1/birch1_dist.pkl', 'rb') as f:
-        data = pickle.load(f)
-    data_loader = lambda : data
-    dist_func   = helper.l2_dist
-elif dataset == 'panT':
-    data_loader = data_loader.load_10x_3k_panT
-    dist_func = helper.l1_dist
 
 
 

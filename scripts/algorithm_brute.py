@@ -91,12 +91,6 @@ elif dataset == 'netflix100k':
 elif dataset == 'mnist':
     data_loader = data_loader.load_mnist
     dist_func   = helper.l2_dist
-elif dataset == 'rand_gaussian':
-    data_loader = data_loader.load_rand
-    dist_func = helper.l1_dist
-elif dataset == 'rand_gaussian2':
-    data_loader = data_loader.load_rand2
-    dist_func = helper.l2_dist
                    
 print("Running", num_trials, "experiments on ", num_jobs, "parallel jobs", "on dataset", dataset)
 arg_tuple =  itertools.product(range(num_trials), [data_loader], [dataset], [dist_func], [verbose] )

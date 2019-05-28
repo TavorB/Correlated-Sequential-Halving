@@ -38,7 +38,6 @@ def initialise(data, init_size, dist_func):
 def Meddit(arg_tuple):
     exp_index   = arg_tuple[0]
     data_loader = arg_tuple[1]
-    # data = arg_tuple[1]
     dataset_name= arg_tuple[2]
     dist_func   = arg_tuple[3]
     sigma       = arg_tuple[4]
@@ -64,9 +63,10 @@ def Meddit(arg_tuple):
     T         = num_init_pulls*np.ones(n, dtype='int')#At any point, stores number of times each arm is pulled
     
     #Calculating the approximate std deviation
-    # sample_distance = dist_func( data[np.random.randint(n,size=2000)], data[np.random.randint(n,size=2000)] ).flatten()
-    # sigma = np.std(sample_distance)
-    # print("sigma = ", sigma)
+    if sigma == -1:
+        sample_distance = dist_func( data[np.random.randint(n,size=2000)], data[np.random.randint(n,size=2000)] ).flatten()
+        sigma = np.std(sample_distance)
+        print("estimated sigma = ", sigma)
 
     # Bookkeeping variables
     start_time = time.time()
@@ -118,7 +118,7 @@ def Meddit(arg_tuple):
     
     #Step 1: Initialize
     print("running experiment ", exp_index, "with sigma", sigma)
-    estimate = initialise(data, num_init_pulls, dist_func) ##Tavor Changed
+    estimate = initialise(data, num_init_pulls, dist_func)
     lcb      = estimate - np.sqrt(sigma**2*np.log(1/Delta)/num_init_pulls)
     ucb      = estimate + np.sqrt(sigma**2*np.log(1/Delta)/num_init_pulls)
 
@@ -198,11 +198,7 @@ elif dataset == 'mnist':
     data_loader = data_loader.load_mnist
     dist_func   = helper.l2_dist
     sigma=-1
-elif dataset == 'panT':
-    data_loader = data_loader.load_10x_3k_panT
-    dist_func = helper.l1_dist
-    # sigma=215
-    sigma=0.2
+
 
 print("Running", num_trials, "experiments on ", num_jobs, "parallel jobs", "on dataset", dataset)
 arg_tuple =  itertools.product(range(num_trials), [data_loader], [dataset], [dist_func], [sigma], [verbose] )
