@@ -1,7 +1,7 @@
 # Correlated-Sequential-Halving
-## Finds the medoid of n points in O(nlog n) steps (naive approach takes O(n^2) steps).
+## Finds the medoid of n points efficiently, approximately O(n log^2 n): brute force takes O(n^2) time.
 
-This is a codebase to reproduce all the figures and numbers of the paper titled - "Ultra Fast Medoid Identification via Correlated Sequential Halving".
+This is a codebase to reproduce all the figures and numbers in the paper titled - "Ultra Fast Medoid Identification via Correlated Sequential Halving".
 
  1) All the figures can be viewed and generated via ipython notebooks in 'figure' folder
  2) The above figures are generated from experiments, which can be re-generated using the following code
