@@ -12,11 +12,11 @@ This is a codebase to reproduce all the figures and numerical results in the pap
   * python algorithm_correlated.py --dataset *** --num_exp 1000 --num_jobs 32 --verbose False
   	* budget can be modified by changing valRange in algorithm_correlated.py. Can perform 'doubling trick' to search and find a good budget.
 
-With the following options
-    * dataset - name of the dataset (rnaseq20k, netflix20k, netflix100k, mnist)
-    	* netflix dataset not included on github due to size, downloadable at https://www.kaggle.com/netflix-inc/netflix-prize-data
-    	* MNIST command deprecated
-    * num_exp - Number of total experiments
-    * num_jobs - Number of experiments run parallely
+With the following options:
+* dataset - name of the dataset (rnaseq20k, netflix20k, netflix100k, mnist)
+  * netflix dataset not included on github due to size, downloadable at https://www.kaggle.com/netflix-inc/netflix-prize-data
+  * MNIST command deprecated
+* num_exp - Number of total experiments
+* num_jobs - Number of experiments run parallely
   
 3) Dependencies: tables and h5py are used in loading rnaseq data, can be installed with python -m pip install h5py. Code is compatible with both Python 2 and 3.
