@@ -6,7 +6,7 @@ import pickle, time
 import logging
 import os,binascii, datetime
 import helper
-from tensorflow.examples.tutorials.mnist import input_data
+# from tensorflow.examples.tutorials.mnist import input_data
 
 logging.basicConfig(level=logging.DEBUG,format='(%(threadName)-10s) %(message)s',)
 
@@ -39,6 +39,8 @@ def load_netflix100k():
     return load_netflixdata()[:100000]
 
 def load_mnist():
-    mnist = input_data.read_data_sets("../datasets/MNIST/", one_hot=False)
-    data  = np.vstack([ mnist.train.images[np.where(mnist.train.labels==0)], mnist.test.images[np.where(mnist.test.labels==0)]])
-    return data
+    # mnist = input_data.read_data_sets("../datasets/MNIST/", one_hot=False)
+    # data  = np.vstack([ mnist.train.images[np.where(mnist.train.labels==0)], mnist.test.images[np.where(mnist.test.labels==0)]])
+    # return data
+    print("Not supported")
+    return -1

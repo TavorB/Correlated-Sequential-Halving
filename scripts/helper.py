@@ -7,7 +7,6 @@ import logging
 import os,binascii, datetime
 from sklearn.metrics.pairwise import pairwise_distances
 
-# from tensorflow.examples.tutorials.mnist import input_data
 logging.basicConfig(level=logging.DEBUG,format='(%(threadName)-10s) %(message)s',)
 
 GeneBCMatrix = collections.namedtuple('GeneBCMatrix', ['gene_ids', 'gene_names', 'barcodes', 'matrix'])

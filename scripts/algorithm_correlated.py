@@ -1,15 +1,7 @@
-import collections
-import matplotlib, datetime
-import matplotlib.pyplot as plt
 import numpy as np
-import scipy.sparse as sp_sparse
-# import tables
 import pickle, time
 from multiprocessing import Pool
-import cProfile, os, argparse
-from scipy.sparse import hstack
-import imp
-import os,binascii, datetime
+import os, argparse
 import multiprocessing as mp
 import itertools
 import logging, data_loader, helper
@@ -41,10 +33,14 @@ def Meddit(arg_tuple):
     if os.path.isfile(filename):
         print("already did", filename)
         return -1
+    
+    if not os.path.exists(filenamebase):
+        os.makedirs(filenamebase)
 
     
     np.random.seed(exp_index) #Random seed for reproducibility
-    print "loading dataset"
+    print("loading dataset")
+
     # Variable initialization
     data      = data_loader()
     n         = data.shape[0]
@@ -117,8 +113,11 @@ def Meddit(arg_tuple):
     logging.info("Exp {} done. Best arm = {}, in {:.2F} sec with {:.1F} avg pulls".format(exp_index, S[0], total_time, T.mean()))
 
 
-    with open(filename,'wb') as f:
-        pickle.dump([summary[-1],summary_pulls[-1], total_time, S[0]],f)
+    if os.path.isfile(filename):
+        print('Already done')
+    else:
+        with open(filename,'wb') as f:
+            pickle.dump([summary[-1],summary_pulls[-1], total_time, S[0]],f)
 
 
 ap = argparse.ArgumentParser(description="Reproduce the experiments in the manuscript")
@@ -154,10 +153,11 @@ elif dataset == 'mnist':
 
 
 print("Running", num_trials, "experiments on ", num_jobs, "parallel jobs", "on dataset", dataset)
-valRange = np.arange(15,22,2)
+## What budgets you want to use (how many distance evaluations per point on average)
+# valRange = np.arange(15,22,2) ## Example usage
+valRange = [15]
+
 arg_tuple =  itertools.product(range(num_trials), valRange, [data_loader], [dataset], [dist_func], [verbose] )
-# for row in arg_tuple:
-#     # print row
-#     Meddit(row)
+
 pool      = mp.Pool(processes=num_jobs)
 pool.map(Meddit, arg_tuple)
